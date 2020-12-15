@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.dreamcar</groupId>
-	<artifactId>auctionplatform</artifactId>
+	<artifactId>auction-platform</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>auctionplatform</name>
+	<name>auction-platform</name>
 	<description>Auction platform</description>
 
 	<properties>
