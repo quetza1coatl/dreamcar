@@ -1,0 +1,291 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-lesson1.yaml
+  - changeSet:
+      id: create_role_table
+      author: Anastasia Andruhovich
+      changes:
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  name: role_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_role
+                    nullable: false
+              - column:
+                  name: role_name
+                  type: varchar(45)
+                  constraints:
+                    unique: true
+                    nullable: false
+  - changeSet:
+      id: create_user_table
+      author: Anastasia Andruhovich
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: user_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_user
+                    nullable: false
+              - column:
+                  name: user_email
+                  type: varchar(45)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_role_id
+                    references: role(role_id)
+  - changeSet:
+      id: create_request_status_table
+      author: Anastasia Andruhovich
+      changes:
+        - createTable:
+            tableName: request_status
+            columns:
+              - column:
+                  name: request_status_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_request_status
+                    nullable: false
+              - column:
+                  name: request_status_name
+                  type: varchar(45)
+                  constraints:
+                    unique: true
+                    nullable: false
+  - changeSet:
+      id: create_offer_status_table
+      author: Anastasia Andruhovich
+      changes:
+        - createTable:
+            tableName: offer_status
+            columns:
+              - column:
+                  name: offer_status_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_offer_status
+                    nullable: false
+              - column:
+                  name: offer_status_name
+                  type: varchar(45)
+                  constraints:
+                    unique: true
+                    nullable: false
+  - changeSet:
+      id: create_request_table
+      author: Anastasia Andruhovich
+      changes:
+        - createTable:
+            tableName: request
+            columns:
+              - column:
+                  name: request_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_request
+                    nullable: false
+              - column:
+                  name: part_name
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expiration_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(200)
+              - column:
+                  name: customer_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_customer_user_id
+                    references: user(user_id)
+              - column:
+                  name: request_status_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_request_status_id
+                    references: request_status(request_status_id)
+  - changeSet:
+      id: create_offer_table
+      author: Anastasia Andruhovich
+      changes:
+        - createTable:
+            tableName: offer
+            columns:
+              - column:
+                  name: offer_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_offer
+                    nullable: false
+              - column:
+                  name: price
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(200)
+              - column:
+                  name: supplier_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_supplier_user_id
+                    references: user(user_id)
+              - column:
+                  name: request_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_offer_request_id
+                    references: request(request_id)
+              - column:
+                  name: offer_status_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_offer_status_id
+                    references: offer_status(offer_status_id)
+  - changeSet:
+      id: create_purchase_order_table
+      author: Anastasia Andruhovich
+      changes:
+        - createTable:
+            tableName: purchase_order
+            columns:
+              - column:
+                  name: order_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_purchase_order
+                    nullable: false
+              - column:
+                  name: request_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_order_request_id
+                    references: request(request_id)
+              - column:
+                  name: winner_offer_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_winner_offer_id
+                    references: offer(offer_id)
+              - column:
+                  name: is_raised
+                  type: boolean
+                  defaultValue: false
+  - changeSet:
+      id: fill_role_table
+      author: Anastasia Andruhovich
+      changes:
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: role_name
+                  value: "customer"
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: role_name
+                  value: "supplier"
+      rollback:
+        - delete:
+            tableName: role
+  - changeSet:
+      id: fill_request_status_table
+      author: Anastasia Andruhovich
+      changes:
+        - insert:
+            tableName: request_status
+            columns:
+              - column:
+                  name: request_status_name
+                  value: "draft"
+        - insert:
+            tableName: request_status
+            columns:
+              - column:
+                  name: request_status_name
+                  value: "opened"
+        - insert:
+            tableName: request_status
+            columns:
+              - column:
+                  name: request_status_name
+                  value: "closed"
+        - insert:
+            tableName: request_status
+            columns:
+              - column:
+                  name: request_status_name
+                  value: "scheduled"
+      rollback:
+        - delete:
+            tableName: request_status
+  - changeSet:
+      id: fill_offer_status_table
+      author: Anastasia Andruhovich
+      changes:
+        - insert:
+            tableName: offer_status
+            columns:
+              - column:
+                  name: offer_status_name
+                  value: "applied"
+        - insert:
+            tableName: offer_status
+            columns:
+              - column:
+                  name: offer_status_name
+                  value: "rejected"
+      rollback:
+        - delete:
+            tableName: offer_status
