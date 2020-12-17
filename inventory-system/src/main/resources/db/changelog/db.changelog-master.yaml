@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-lesson1.yaml
+  - changeSet:
+      id: create_component_table
+      author: Anastasia Andruhovich
+      changes:
+        - createTable:
+            tableName: component
+            columns:
+              - column:
+                  name: _id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_component
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(45)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: int
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: fill_component_table
+      author: Anastasia Andruhovich
+      changes:
+        - insert:
+            tableName: component
+            columns:
+              - column:
+                  name: name
+                  value: "brake pad"
+              - column:
+                  name: quantity
+                  value: 10
+        - insert:
+            tableName: component
+            columns:
+              - column:
+                  name: name
+                  value: "brake disc"
+              - column:
+                  name: quantity
+                  value: 10
+        - insert:
+            tableName: component
+            columns:
+              - column:
+                  name: name
+                  value: "suspension"
+              - column:
+                  name: quantity
+                  value: 10
+      rollback:
+        - delete:
+            tableName: component
