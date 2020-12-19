@@ -8,7 +8,7 @@ databaseChangeLog:
             tableName: role
             columns:
               - column:
-                  name: role_id
+                  name: id
                   type: int
                   autoIncrement: true
                   constraints:
@@ -29,7 +29,7 @@ databaseChangeLog:
             tableName: user
             columns:
               - column:
-                  name: user_id
+                  name: id
                   type: int
                   autoIncrement: true
                   constraints:
@@ -48,7 +48,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_role_id
-                    references: role(role_id)
+                    references: role(id)
   - changeSet:
       id: create_request_status_table
       author: Anastasia Andruhovich
@@ -57,7 +57,7 @@ databaseChangeLog:
             tableName: request_status
             columns:
               - column:
-                  name: request_status_id
+                  name: id
                   type: int
                   autoIncrement: true
                   constraints:
@@ -78,7 +78,7 @@ databaseChangeLog:
             tableName: offer_status
             columns:
               - column:
-                  name: offer_status_id
+                  name: id
                   type: int
                   autoIncrement: true
                   constraints:
@@ -99,7 +99,7 @@ databaseChangeLog:
             tableName: request
             columns:
               - column:
-                  name: request_id
+                  name: id
                   type: int
                   autoIncrement: true
                   constraints:
@@ -135,14 +135,14 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_customer_user_id
-                    references: user(user_id)
+                    references: user(id)
               - column:
                   name: request_status_id
                   type: int
                   constraints:
                     nullable: false
                     foreignKeyName: fk_request_status_id
-                    references: request_status(request_status_id)
+                    references: request_status(id)
   - changeSet:
       id: create_offer_table
       author: Anastasia Andruhovich
@@ -151,7 +151,7 @@ databaseChangeLog:
             tableName: offer
             columns:
               - column:
-                  name: offer_id
+                  name: id
                   type: int
                   autoIncrement: true
                   constraints:
@@ -172,21 +172,21 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_supplier_user_id
-                    references: user(user_id)
+                    references: user(id)
               - column:
                   name: request_id
                   type: int
                   constraints:
                     nullable: false
                     foreignKeyName: fk_offer_request_id
-                    references: request(request_id)
+                    references: request(id)
               - column:
                   name: offer_status_id
                   type: int
                   constraints:
                     nullable: false
                     foreignKeyName: fk_offer_status_id
-                    references: offer_status(offer_status_id)
+                    references: offer_status(id)
   - changeSet:
       id: fill_role_table
       author: Anastasia Andruhovich
