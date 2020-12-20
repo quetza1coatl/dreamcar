@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ class UserAndRoleTest {
     RoleRepository roleRepository;
 
     @Test
+    @DirtiesContext
     void save(){
         Role customerRole = roleRepository.findByName("supplier");
         User u1 = new User("test@gmail.com", customerRole);
