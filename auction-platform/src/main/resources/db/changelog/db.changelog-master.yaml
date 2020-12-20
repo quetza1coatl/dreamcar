@@ -244,6 +244,12 @@ databaseChangeLog:
             columns:
               - column:
                   name: offer_status_name
+                  value: "not processed"
+        - insert:
+            tableName: offer_status
+            columns:
+              - column:
+                  name: offer_status_name
                   value: "applied"
         - insert:
             tableName: offer_status
@@ -254,3 +260,76 @@ databaseChangeLog:
       rollback:
         - delete:
             tableName: offer_status
+  - changeSet:
+      id: fill_user_table_1
+      author: Aliaksei Sviatokha
+      changes:
+      - insert:
+          tableName: user
+          columns:
+          - column:
+              name: user_email
+              value: "customer@test.com"
+          - column:
+              name: role_id
+              value: 1
+  - changeSet:
+      id: fill_user_table_2
+      author: Aliaksei Sviatokha
+      changes:
+      - insert:
+          tableName: user
+          columns:
+          - column:
+              name: user_email
+              value: "supplier@test.com"
+          - column:
+              name: role_id
+              value: 2
+  - changeSet:
+      id: fill_request_table
+      author: Aliaksei Sviatokha
+      changes:
+      - insert:
+          tableName: request
+          columns:
+          - column:
+              name: part_name
+              value: "suspension"
+          - column:
+              name: quantity
+              value: 42
+          - column:
+              name: creation_date
+              value: now()
+          - column:
+              name: description
+              value: "Suspension is the system of tires, tire air, springs, shock absorbers and linkages that connects a vehicle to its wheels and allows relative motion between the two."
+          - column:
+              name: customer_id
+              value: 1
+          - column:
+              name: request_status_id
+              value: 1
+  - changeSet:
+      id: fill_offer_table
+      author: Aliaksei Sviatokha
+      changes:
+      - insert:
+          tableName: offer
+          columns:
+          - column:
+              name: price
+              value: 99.99
+          - column:
+              name: description
+              value: "Best suspension u have ever seen"
+          - column:
+              name: supplier_id
+              value: 2
+          - column:
+              name: request_id
+              value: 1
+          - column:
+              name: offer_status_id
+              value: 1
