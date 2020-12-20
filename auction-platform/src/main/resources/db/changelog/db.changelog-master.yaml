@@ -124,8 +124,6 @@ databaseChangeLog:
               - column:
                   name: expiration_date
                   type: timestamp
-                  constraints:
-                    nullable: false
               - column:
                   name: description
                   type: varchar(200)
