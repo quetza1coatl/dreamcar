@@ -1,5 +1,5 @@
 databaseChangeLog:
-  - logicalFilePath: db/changelog/db.changelog-lesson1.yaml
+  - logicalFilePath: db/changelog/db.changelog-master.yaml
   - changeSet:
       id: create_role_table
       author: Anastasia Andruhovich
@@ -124,8 +124,6 @@ databaseChangeLog:
               - column:
                   name: expiration_date
                   type: timestamp
-                  constraints:
-                    nullable: false
               - column:
                   name: description
                   type: varchar(200)

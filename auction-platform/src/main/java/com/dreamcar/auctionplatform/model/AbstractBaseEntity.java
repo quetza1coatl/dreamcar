@@ -1,7 +1,6 @@
 package com.dreamcar.auctionplatform.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -10,19 +9,14 @@ import java.io.Serializable;
 @MappedSuperclass
 @Getter
 @Setter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AbstractBaseEntity implements Serializable {
     protected static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
-
-    protected AbstractBaseEntity() {
-    }
-
-    protected AbstractBaseEntity(Integer id) {
-        this.id = id;
-    }
 
     @Override
     public String toString() {
