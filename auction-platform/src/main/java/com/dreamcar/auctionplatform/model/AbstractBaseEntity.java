@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AbstractBaseEntity implements Serializable {
+public abstract class AbstractBaseEntity implements Serializable {
     protected static final long serialVersionUID = 1L;
 
     @Id
@@ -33,10 +33,6 @@ public class AbstractBaseEntity implements Serializable {
         }
         AbstractBaseEntity that = (AbstractBaseEntity) o;
         return id != null && id.equals(that.id);
-    }
-
-    public boolean isNew() {
-        return getId() == null;
     }
 
     @Override
