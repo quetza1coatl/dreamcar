@@ -5,7 +5,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -34,9 +33,17 @@ public class Request extends AbstractBaseEntity {
     @Size(max = 200)
     private String description;
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false)
     private @NonNull User customer;
 
     @OneToOne(optional = false)
     private @NonNull RequestStatus requestStatus;
+
+    public Request(
+            @Size(max = 45) @NonNull String partName, @Min(value = 0) @NonNull Integer quantity,
+            @Size(max = 200) String description, @NonNull User customer, @NonNull RequestStatus requestStatus
+    ) {
+        this(partName, quantity, customer, requestStatus);
+        this.description = description;
+    }
 }
