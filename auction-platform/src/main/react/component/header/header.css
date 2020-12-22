@@ -1,0 +1,53 @@
+.site-header {
+    background-color: #26272b;
+    padding: 10px 0 10px;
+    font-size: 15px;
+    color: #737373;
+}
+
+.site-header a {
+    color: #737373;
+}
+
+.site-header a:hover {
+    color: #3366cc;
+    text-decoration: none;
+}
+
+.header-links {
+    padding-left: 0;
+    list-style: none
+}
+
+.header-links li {
+    display: block
+}
+
+.header-link userName {
+    margin-top: 15px;
+}
+
+.header-links a {
+    color: #737373
+}
+
+.header-links a:active, .header-links a:focus, .header-links a:hover {
+    color: #3366cc;
+    text-decoration: none;
+}
+
+.header-links.inline li {
+    display: inline-block
+}
+
+@media (max-width: 991px) {
+    .site-header [class^=col-] {
+        margin-bottom: 30px
+    }
+}
+
+@media (max-width: 767px) {
+    .site-header {
+        padding-bottom: 0
+    }
+}
