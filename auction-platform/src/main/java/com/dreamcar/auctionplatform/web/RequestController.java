@@ -42,4 +42,11 @@ public class RequestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @PostMapping(path = "/feign", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String createFeignRequest(@Valid @RequestBody RequestDto requestDto) {
+        log.info(LOG_TEMPLATE, "createFeignRequest");
+        Request created = requestService.save(requestDto);
+        return REST_URL + "/" + created.getId();
+    }
+
 }
