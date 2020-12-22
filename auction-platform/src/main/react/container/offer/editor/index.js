@@ -1,6 +1,6 @@
 import React from 'react'
 
-import OfferEditorComponent from '../../../component/offer'
+import OfferEditorComponent from '../../../component/offer/editor'
 
 class OfferEditor extends React.Component {
 

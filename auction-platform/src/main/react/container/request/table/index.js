@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 
 import Table from '../../../component/table'
 import RequestEditor from '../editor'
+import OfferCreator from '../../offer/creator'
 
 const mockData = [
     {
@@ -253,7 +254,7 @@ class RequestTable extends React.Component {
                 {row.isEditable ?  <a href="javascript:void(0)" onClick={() => this.onEditRequestClick(row.id)}>
                     Edit <i className="glyphicon glyphicon-pencil"/>
                 </a> : null}
-                    {row.isOfferCreated ? <a href="javascript:void(0)">
+                    {row.isOfferCreated ? <a href="javascript:void(0)" onClick={() => this.onCreateOfferClick(row.id)}>
                         Create offer <i className="glyphicon glyphicon-plus"/>
                     </a> : null}
             </span>,
@@ -266,7 +267,9 @@ class RequestTable extends React.Component {
         this.state = {
             requestData: [],
             editableRequestId: null,
-            isShowRequestEditor: false
+            isShowRequestEditor: false,
+            createOfferRequestId: null,
+            isShowOfferCreator: false
         }
     }
 
@@ -296,6 +299,32 @@ class RequestTable extends React.Component {
         })
     };
 
+    onCreateOfferClick = (requestId) => {
+        this.setState({
+            isShowOfferCreator: true,
+            createOfferRequestId: requestId
+        })
+    };
+
+    onCreateOffer = (price, description) => {
+        /*fetch("/api/createOffer", {
+            method: "POST",
+            body: {
+                requestId: this.state.createOfferRequestId,
+                price,
+                description
+            }
+        })
+            .then(res => res.json())
+            .then(
+                () => {
+                },
+                (error) => {
+                    console.log(error)
+                }
+            )*/
+    };
+
     onSaveExpirationDate = (expirationDate) => {
         /*fetch("/api/updateExpirationDate", {
             method: "POST",
@@ -321,6 +350,13 @@ class RequestTable extends React.Component {
         })
     };
 
+    onCreateOfferClose = () => {
+        this.setState({
+            createOfferRequestId: null,
+            isShowOfferCreator: false
+        })
+    };
+
     render() {
         return <span>
             <Table title={this.REQUEST_TABLE_TITLE}
@@ -329,6 +365,9 @@ class RequestTable extends React.Component {
             <RequestEditor isShow={this.state.isShowRequestEditor}
                            onSaveExpirationDate={this.onSaveExpirationDate}
                            onEditRequestClose={this.onEditRequestClose}/>
+            <OfferCreator isShow={this.state.isShowOfferCreator}
+                          onCreateOffer={this.onCreateOffer}
+                          onCreateOfferClose={this.onCreateOfferClose}/>
         </span>
     }
 }
