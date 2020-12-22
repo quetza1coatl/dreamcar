@@ -8,7 +8,7 @@ const Footer = () => (
                 <div className="col-xs-12 col-md-9">
                     <h6>About</h6>
                     <p className="text-justify"><i>Believe in magic </i> is an integral part of the
-                        survival philosophy push. Bugs and mistakes are a highlight in every sense of a memorable project with which
+                        survival philosophy. Bugs and mistakes are a highlight in every sense of a memorable project with which
                         you can try to organize a tender in the form of an open auction for the purchase of car parts.
                         We will be glad if you succeed in doing this. The developers did not succeed:(</p>
                 </div>
@@ -27,9 +27,7 @@ const Footer = () => (
         <div className="container">
             <div className="row">
                 <div className="col-md-8 col-sm-6 col-xs-12">
-                    <p className="copyright-text">Copyright &copy; 2020 All rights could be reserved by
-                        <a href="#">Auction platform</a>.
-                    </p>
+                    <p className="copyright-text">Copyright &copy; 2020 All rights could be reserved by Auction platform.</p>
                 </div>
             </div>
         </div>
