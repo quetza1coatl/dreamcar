@@ -10,17 +10,29 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestDto extends AbstractBaseDto {
+    private Integer id;
 
     @Size(max = 45)
     private @NonNull String partName;
 
-    @Min(value=0)
+    @Min(value = 0)
     private @NonNull Integer quantity;
 
     @Size(max = 200)
     private String description;
 
-    private @NonNull Integer customerId;
+    @Size(max = 45)
+    private @NonNull String customerEmail;
 
-    private @NonNull Integer requestStatusId;
+    private @NonNull String creationDate;
+
+    private String expirationDate;
+
+    @Size(max = 45)
+    private @NonNull String status;
+
+    private boolean isEditable;
+
+    private boolean isOfferCreated;
+
 }

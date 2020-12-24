@@ -5,10 +5,12 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -38,6 +40,9 @@ public class Request extends AbstractBaseEntity {
 
     @OneToOne(optional = false)
     private @NonNull RequestStatus requestStatus;
+
+    @OneToMany(mappedBy = "request")
+    private List<Offer> offers;
 
     public Request(
             @Size(max = 45) @NonNull String partName, @Min(value = 0) @NonNull Integer quantity,

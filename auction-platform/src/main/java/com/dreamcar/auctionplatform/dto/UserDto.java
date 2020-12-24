@@ -18,5 +18,5 @@ public class UserDto extends AbstractBaseDto{
     @Size(max = 45)
     private String email;
 
-    private Integer roleId;
+    private String role;
 }

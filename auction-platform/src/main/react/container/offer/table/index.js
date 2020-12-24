@@ -65,10 +65,10 @@ class OfferTable extends React.Component {
             name: 'Actions',
             cell: row =>
                 <span>
-                {row.isEditable ? <a href="javascript:void(0)" onClick={() => this.onEditOfferClick(row.id)}>
+                {row.editable ? <a href="javascript:void(0)" onClick={() => this.onEditOfferClick(row.id)}>
                     Edit <i className="glyphicon glyphicon-pencil"/>
                 </a> : null}
-                    {row.isApplying ? <Button variant="primary" onClick={this.applyOffer(row.id)}>Apply</Button> : null}
+                    {row.applying ? <Button variant="primary" onClick={this.applyOffer(row.id)}>Apply</Button> : null}
             </span>
         }
     ]
@@ -83,24 +83,20 @@ class OfferTable extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-            offerData: mockData
-        })
-
-        /*const {requestId} = this.props.match.params
-        const getOffersURL = requestId ? `/api/offersByRequestId/${requestId}` : `/api/offers/`
+        const {requestId} = this.props.match.params
+        const getOffersURL = requestId ? `/offersByRequestId/${requestId}` : `/offers`
         fetch(getOffersURL)
             .then(res => res.json())
             .then(
                 (result) => {
                     this.setState({
-                        offerData: result.offerData,
+                        offerData: result,
                     });
                 },
                 (error) => {
                     console.log(error)
                 }
-            )*/
+            )
     }
 
     applyOffer = (offerId) => {

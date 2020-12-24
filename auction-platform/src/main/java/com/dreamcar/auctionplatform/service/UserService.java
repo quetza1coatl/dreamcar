@@ -30,16 +30,16 @@ public class UserService {
 
 
     public User save(UserDto userDto){
-        Optional<Role> optionalRole = roleRepository.findById(userDto.getRoleId());
-        if (!optionalRole.isPresent()) {
+        Role role = roleRepository.findByName(userDto.getRole());
+        if (role == null) {
             String exceptionMessage = String.format(
-                    EntityNotFoundException.EXCEPTION_MESSAGE_FORMAT, Role.class.getSimpleName(), userDto.getRoleId()
+                    EntityNotFoundException.EXCEPTION_MESSAGE_FORMAT, Role.class.getSimpleName(), userDto.getRole()
             );
             log.error(exceptionMessage);
             throw new EntityNotFoundException(exceptionMessage);
         }
 
-        User user = new User(userDto.getEmail(), optionalRole.get());
+        User user = new User(userDto.getEmail(), role);
         return userRepository.save(user);
     }
 }
