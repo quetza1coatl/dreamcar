@@ -79,6 +79,10 @@ class RequestTable extends React.Component {
     }
 
     componentDidMount() {
+        this.fetchRequestData()
+    }
+
+    fetchRequestData = () => {
         fetch("/requests")
             .then(res => res.json())
             .then(
@@ -122,6 +126,7 @@ class RequestTable extends React.Component {
         })
             .then(
                 () => {
+                    this.onCreateOfferClose()
                 },
                 (error) => {
                     console.log(error)
@@ -148,6 +153,7 @@ class RequestTable extends React.Component {
             isShowRequestEditor: false,
             editableRequestId: null
         })
+        this.fetchRequestData()
     };
 
     onCreateOfferClose = () => {
@@ -155,6 +161,7 @@ class RequestTable extends React.Component {
             createOfferRequestId: null,
             isShowOfferCreator: false
         })
+        this.fetchRequestData()
     };
 
     render() {

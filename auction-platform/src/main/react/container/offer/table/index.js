@@ -4,30 +4,6 @@ import Table from '../../../component/table'
 import Button from "react-bootstrap/Button";
 import OfferEditor from '../editor'
 
-
-const mockData = [
-    {
-        id: 'test1',
-        price: 'dfsfdsdfs',
-        requestId: 123,
-        supplierEmail: 'test@test.com',
-        description: 'Wow!',
-        status: 'non-processed',
-        isEditable: true,
-        isApplying: false
-    },
-    {
-        id: 'test2',
-        price: 'aaaaaa',
-        requestId: 124,
-        supplierEmail: 'test2@test.com',
-        description: 'Wow!',
-        status: 'non-processed',
-        isEditable: false,
-        isApplying: true
-    }
-]
-
 class OfferTable extends React.Component {
     OFFER_TABLE_TITLE = 'Offers'
     OFFER_TABLE_COLUMNS = [
@@ -84,6 +60,10 @@ class OfferTable extends React.Component {
     }
 
     componentDidMount() {
+        this.fetchOfferData()
+    }
+
+    fetchOfferData = () => {
         const {requestId} = this.props.match.params
         const getOffersURL = requestId ? `/offers/${requestId}` : `/offers`
         fetch(getOffersURL)
@@ -104,6 +84,7 @@ class OfferTable extends React.Component {
         fetch(`/offers/applyOffer/${offerId}`)
             .then(
                 () => {
+                    this.fetchOfferData()
                 },
                 (error) => {
                     console.log(error)
@@ -137,6 +118,7 @@ class OfferTable extends React.Component {
             isShowOfferEditor: false,
             editableOfferId: null
         })
+        this.fetchOfferData()
     };
 
     render() {
