@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class RequestDto extends AbstractBaseDto {
     private Integer id;
 
@@ -24,7 +25,7 @@ public class RequestDto extends AbstractBaseDto {
     @Size(max = 45)
     private @NonNull String customerEmail;
 
-    private @NonNull String creationDate;
+    private String creationDate;
 
     private String expirationDate;
 

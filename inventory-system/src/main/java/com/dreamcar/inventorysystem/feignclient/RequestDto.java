@@ -10,6 +10,10 @@ public class RequestDto{
     private @NonNull String partName;
     private @NonNull Integer quantity;
     private String description;
-    private Integer customerId = 1;
-    private Integer requestStatusId = 1;
+    private @NonNull String customerEmail = "customer@test.com";
+    private String creationDate;
+    private String expirationDate;
+    private @NonNull String status = "draft";
+    private boolean isEditable;
+    private boolean isOfferCreated;
 }
