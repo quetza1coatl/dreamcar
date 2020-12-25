@@ -25,9 +25,9 @@ public class ComponentService {
         return componentRepository.findAll();
     }
 
-    public Component getComponent(Integer id){
+    public Component getComponent(Integer id) {
         Optional<Component> optionalComponent = componentRepository.findById(id);
-        if(!optionalComponent.isPresent()){
+        if (!optionalComponent.isPresent()) {
             String exceptionMessage = String.format(
                     EntityNotFoundException.EXCEPTION_MESSAGE_FORMAT, Component.class.getSimpleName(), id
             );
@@ -42,7 +42,14 @@ public class ComponentService {
     }
 
     @Transactional
-    public Component update(Component component){
+    public Component updateFeignComponent(Component feignComponent) {
+        Component component = componentRepository.findComponentByName(feignComponent.getName());
+        component.setQuantity(component.getQuantity() + feignComponent.getQuantity());
+        return componentRepository.save(component);
+    }
+
+    @Transactional
+    public Component update(Component component) {
         return componentRepository.save(component);
     }
 }

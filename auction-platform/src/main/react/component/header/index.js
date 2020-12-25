@@ -32,7 +32,7 @@ const Header = ({userEmail, login, logout}) => (
         </header>
         <div className="content">
             <Route exact path="/" component={RequestTable}/>
-            <Route path={["/offers", "/offersByRequestId/:requestId"]} component={OfferTable}/>
+            <Route path={["/offers/:requestId", "/offers"]} component={OfferTable}/>
         </div>
     </HashRouter>
 );

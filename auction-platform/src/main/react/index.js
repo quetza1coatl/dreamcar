@@ -4,9 +4,9 @@ import Footer from './component/footer'
 import Header from './component/header'
 
 const mockUser = {
-    userId: 111,
-    userEmail: 'anastasia.andruhovich@gmail.com',
-    userRole: 'customer'
+    userId: 2,
+    userEmail: 'supplier@test.com',
+    userRole: 'supplier'
 }
 
 ReactDOM.render(

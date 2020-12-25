@@ -3,6 +3,7 @@ package com.dreamcar.auctionplatform.service;
 import com.dreamcar.auctionplatform.dto.RequestDto;
 import com.dreamcar.auctionplatform.dto.UserDto;
 import com.dreamcar.auctionplatform.exceptions.EntityNotFoundException;
+import com.dreamcar.auctionplatform.mapper.RequestMapper;
 import com.dreamcar.auctionplatform.model.Request;
 import com.dreamcar.auctionplatform.model.RequestStatus;
 import com.dreamcar.auctionplatform.model.User;
@@ -15,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,32 +25,18 @@ public class RequestService {
     private final RequestRepository requestRepository;
     private final UserRepository userRepository;
     private final RequestStatusRepository requestStatusRepository;
+    private final RequestMapper requestMapper;
 
-    public RequestService(RequestRepository requestRepository, UserRepository userRepository, RequestStatusRepository requestStatusRepository) {
+    public RequestService(RequestRepository requestRepository, UserRepository userRepository, RequestStatusRepository requestStatusRepository, RequestMapper requestMapper) {
         this.requestRepository = requestRepository;
         this.userRepository = userRepository;
         this.requestStatusRepository = requestStatusRepository;
+        this.requestMapper = requestMapper;
     }
 
 
     public Iterable<RequestDto> getAll(UserDto userDto) {
-        Iterable<Request> requests = requestRepository.findAll();
-        List<RequestDto> result = new LinkedList<>();
-        requests.forEach(request -> {
-            RequestDto requestDto = new RequestDto();
-            requestDto.setId(request.getId());
-            requestDto.setPartName(request.getPartName());
-            requestDto.setQuantity(request.getQuantity());
-            requestDto.setDescription(request.getDescription());
-            requestDto.setCustomerEmail(request.getCustomer().getEmail());
-            requestDto.setCreationDate(request.getCreationDate().toString());
-            requestDto.setExpirationDate(request.getExpirationDate() == null ? null : request.getExpirationDate().toString());
-            requestDto.setStatus(request.getRequestStatus().getName());
-            requestDto.setEditable(request.getCustomer().getEmail().equals(userDto.getEmail()) && request.getRequestStatus().getName().equals("draft"));
-            requestDto.setOfferCreated(userDto.getRole().equals("supplier") && request.getOffers().stream().noneMatch(offer -> offer.getSupplier().getEmail().equals(userDto.getEmail())));
-            result.add(requestDto);
-        });
-        return result;
+        return requestMapper.mapRequestsToRequestDtos(userDto, requestRepository.findAll());
     }
 
     @Transactional
@@ -67,7 +52,7 @@ public class RequestService {
         Optional<Request> optionalRequest = requestRepository.findById(requestId);
         if (!optionalRequest.isPresent()) {
             String exceptionMessage = String.format(
-                    EntityNotFoundException.EXCEPTION_MESSAGE_FORMAT, RequestStatus.class.getSimpleName(), requestId
+                    EntityNotFoundException.EXCEPTION_MESSAGE_FORMAT, Request.class.getSimpleName(), requestId
             );
             log.error(exceptionMessage);
             throw new EntityNotFoundException(exceptionMessage);

@@ -7,8 +7,8 @@ import ModalFooter from 'react-bootstrap/ModalFooter'
 
 import Button from 'react-bootstrap/Button'
 
-const OfferEditorComponent = ({isShow, price, onSavePriceDate, onChangePrice, closeHandler}) => (
-    <Modal show={isShow} onHide={closeHandler} style={{opacity:1, paddingTop: '15px'}}>
+const OfferEditorComponent = ({isShow, price, onSavePrice, onChangePrice, closeHandler}) => (
+    <Modal show={isShow} onHide={closeHandler} style={{opacity: 1, paddingTop: '15px'}}>
         <ModalHeader closeButton>
             <ModalTitle>Edit request</ModalTitle>
         </ModalHeader>
@@ -23,7 +23,7 @@ const OfferEditorComponent = ({isShow, price, onSavePriceDate, onChangePrice, cl
 
         <ModalFooter>
             <Button variant="secondary" onClick={closeHandler}>Close</Button>
-            <Button variant="primary" onClick={onSavePriceDate}>Save changes</Button>
+            <Button variant="primary" onClick={onSavePrice}>Save changes</Button>
         </ModalFooter>
     </Modal>
 );

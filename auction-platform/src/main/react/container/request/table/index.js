@@ -50,13 +50,13 @@ class RequestTable extends React.Component {
         },
         {
             name: 'Offers',
-            cell: row => <Link to={`/offersByRequestId/${row.id}`}>Details</Link>
+            cell: row => <Link to={`/offers/${row.id}`}>Details</Link>
         },
         {
             name: 'Actions',
             cell: row =>
                 <span>
-                {row.editable ?  <a href="javascript:void(0)" onClick={() => this.onEditRequestClick(row.id)}>
+                {row.editable ? <a href="javascript:void(0)" onClick={() => this.onEditRequestClick(row.id)}>
                     Edit <i className="glyphicon glyphicon-pencil"/>
                 </a> : null}
                     {row.offerCreated ? <a href="javascript:void(0)" onClick={() => this.onCreateOfferClick(row.id)}>
@@ -108,22 +108,25 @@ class RequestTable extends React.Component {
     };
 
     onCreateOffer = (price, description) => {
-        /*fetch("/api/createOffer", {
+        fetch(`/offers/createOffer`, {
             method: "POST",
-            body: {
+            body: JSON.stringify({
                 requestId: this.state.createOfferRequestId,
                 price,
-                description
+                description,
+                status: 'not processed'
+            }),
+            headers: {
+                'Content-Type': 'application/json'
             }
         })
-            .then(res => res.json())
             .then(
                 () => {
                 },
                 (error) => {
                     console.log(error)
                 }
-            )*/
+            )
     };
 
     onSaveExpirationDate = (expirationDate) => {

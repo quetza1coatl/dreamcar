@@ -7,6 +7,8 @@ import com.dreamcar.inventorysystem.service.ComponentService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping(path = ComponentController.REST_URL)
@@ -33,12 +35,12 @@ public class ComponentController {
         String response;
         Component component = componentService.getComponent(id);
         int diff = componentService.getDiffBetweenExistingAndRequiredComponents(component, quantity);
-        if(diff >= 0){
+        if (diff >= 0) {
             component.setQuantity(diff);
             componentService.update(component);
             response = String.format("{\"received\":{\"name\":\"%s\",\"quantity\": %d}}", component.getName(), quantity);
             return response;
-        }else{
+        } else {
             int allAvailableComponents = component.getQuantity();
             component.setQuantity(0);
             Integer quantityToOrder = Math.abs(diff);
@@ -47,10 +49,15 @@ public class ComponentController {
             componentService.update(component);
             response = String.format(
                     "{\"received\":{\"name\":\"%s\",\"quantity\":%d},\"ordered\":{\"name\":\"%s\"," +
-                    "\"quantity\":%d},\"order_resource\":\"%s\",\"message\":\"Please, confirm request at the Auction" +
-                    " Platform to continue purchasing.\"}",
+                            "\"quantity\":%d},\"order_resource\":\"%s\",\"message\":\"Please, confirm request at the Auction" +
+                            " Platform to continue purchasing.\"}",
                     component.getName(), allAvailableComponents, component.getName(), quantityToOrder, resourceUrl);
             return response;
         }
+    }
+
+    @PostMapping(path = "/feign", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void getFeignComponent(@Valid @RequestBody Component component) {
+        componentService.updateFeignComponent(component);
     }
 }

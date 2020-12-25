@@ -68,7 +68,8 @@ class OfferTable extends React.Component {
                 {row.editable ? <a href="javascript:void(0)" onClick={() => this.onEditOfferClick(row.id)}>
                     Edit <i className="glyphicon glyphicon-pencil"/>
                 </a> : null}
-                    {row.applying ? <Button variant="primary" onClick={this.applyOffer(row.id)}>Apply</Button> : null}
+                    {row.applying ?
+                        <Button variant="primary" onClick={() => this.applyOffer(row.id)}>Apply</Button> : null}
             </span>
         }
     ]
@@ -84,7 +85,7 @@ class OfferTable extends React.Component {
 
     componentDidMount() {
         const {requestId} = this.props.match.params
-        const getOffersURL = requestId ? `/offersByRequestId/${requestId}` : `/offers`
+        const getOffersURL = requestId ? `/offers/${requestId}` : `/offers`
         fetch(getOffersURL)
             .then(res => res.json())
             .then(
@@ -100,15 +101,14 @@ class OfferTable extends React.Component {
     }
 
     applyOffer = (offerId) => {
-        /*fetch(`/api/applyOffer/${offerId}`)
-            .then(res => res.json())
+        fetch(`/offers/applyOffer/${offerId}`)
             .then(
-                (result) => {
+                () => {
                 },
                 (error) => {
                     console.log(error)
                 }
-            )*/
+            )
     };
 
     onEditOfferClick = (offerId) => {
@@ -119,21 +119,17 @@ class OfferTable extends React.Component {
     };
 
     onSavePrice = (price) => {
-        /*fetch("/api/updateExpirationDate", {
+        fetch(`/offers/updateOffer/${this.state.editableOfferId}`, {
             method: "POST",
-            body: {
-                offerId: this.state.editableOfferId,
-                price: price
-            }
+            body: price
         })
-            .then(res => res.json())
             .then(
                 () => {
                 },
                 (error) => {
                     console.log(error)
                 }
-            )*/
+            )
     };
 
     onEditOfferClose = () => {

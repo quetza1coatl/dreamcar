@@ -22,7 +22,7 @@ public class OfferController {
     private final OfferService offerService;
 
     //Mock: will be replaced by UserDetails object from SecurityContextHolder
-    private UserDto user = new UserDto("supplier@test.com", "supplier");
+    private UserDto user = new UserDto("customer@test.com", "customer");
 
     public OfferController(OfferService offerService) {
         this.offerService = offerService;
@@ -35,14 +35,33 @@ public class OfferController {
         return offerService.getAll(user);
     }
 
+    @GetMapping(path = "/{requestId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<OfferDto> getOffersByRequestId(@PathVariable Integer requestId) {
+        log.info(LOG_TEMPLATE, "getOffersByRequestId");
+        return offerService.getOffersByRequestId(user, requestId);
+    }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/applyOffer/{offerId}")
+    public void applyOffer(@PathVariable Integer offerId) {
+        log.info(LOG_TEMPLATE, "applyOffer");
+        offerService.applyOffer(offerId);
+    }
+
+
+    @PostMapping(path = "/createOffer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Offer> createOffer(@Valid @RequestBody OfferDto offerDto) {
         log.info(LOG_TEMPLATE, "createOffer");
+        offerDto.setSupplierEmail(user.getEmail());
         Offer created = offerService.save(offerDto);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
+    @PostMapping(path = "/updateOffer/{offerId}", consumes = MediaType.TEXT_PLAIN_VALUE)
+    public void updateOffer(@PathVariable Integer offerId, @RequestBody String price) {
+        log.info(LOG_TEMPLATE, "updateRequest");
+        offerService.update(offerId, price);
     }
 }
