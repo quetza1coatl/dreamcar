@@ -3,11 +3,8 @@ package com.dreamcar.auctionplatform.web;
 import com.dreamcar.auctionplatform.dto.RequestDto;
 import com.dreamcar.auctionplatform.dto.UserDto;
 import com.dreamcar.auctionplatform.model.Request;
-import com.dreamcar.auctionplatform.model.Role;
-import com.dreamcar.auctionplatform.model.User;
 import com.dreamcar.auctionplatform.service.RequestService;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +53,7 @@ public class RequestController {
         return REST_URL + "/" + created.getId();
     }
 
-    @PostMapping(path="/updateRequest/{requestId}", consumes = MediaType.TEXT_PLAIN_VALUE)
+    @PostMapping(path = "/updateRequest/{requestId}", consumes = MediaType.TEXT_PLAIN_VALUE)
     public void updateRequest(@PathVariable Integer requestId, @RequestBody String expirationDate) {
         log.info(LOG_TEMPLATE, "updateRequest");
         requestService.update(requestId, expirationDate);

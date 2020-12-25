@@ -9,15 +9,15 @@ import com.dreamcar.auctionplatform.model.User;
 import com.dreamcar.auctionplatform.repository.RequestRepository;
 import com.dreamcar.auctionplatform.repository.RequestStatusRepository;
 import com.dreamcar.auctionplatform.repository.UserRepository;
-import com.sun.jmx.snmp.Timestamp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -34,7 +34,7 @@ public class RequestService {
     }
 
 
-    public Iterable<RequestDto> getAll(UserDto userDto){
+    public Iterable<RequestDto> getAll(UserDto userDto) {
         Iterable<Request> requests = requestRepository.findAll();
         List<RequestDto> result = new LinkedList<>();
         requests.forEach(request -> {
@@ -58,24 +58,7 @@ public class RequestService {
     public Request save(RequestDto requestDto) {
         User customer = userRepository.findByEmail(requestDto.getCustomerEmail());
         RequestStatus status = requestStatusRepository.findByName(requestDto.getStatus());
-        if (customer == null) {
-            String exceptionMessage = String.format(
-                    EntityNotFoundException.EXCEPTION_MESSAGE_FORMAT, User.class.getSimpleName(), requestDto.getCustomerEmail()
-            );
-            log.error(exceptionMessage);
-            throw new EntityNotFoundException(exceptionMessage);
-        }
-        if (status == null) {
-            String exceptionMessage = String.format(
-                    EntityNotFoundException.EXCEPTION_MESSAGE_FORMAT, RequestStatus.class.getSimpleName(), requestDto.getStatus()
-            );
-            log.error(exceptionMessage);
-            throw new EntityNotFoundException(exceptionMessage);
-        }
-        Request request = new Request(
-                requestDto.getPartName(), requestDto.getQuantity(),requestDto.getDescription(), customer, status
-        );
-
+        Request request = new Request(requestDto.getPartName(), requestDto.getQuantity(), requestDto.getDescription(), customer, status);
         return requestRepository.save(request);
     }
 

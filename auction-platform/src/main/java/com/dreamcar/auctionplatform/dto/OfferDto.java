@@ -2,7 +2,6 @@ package com.dreamcar.auctionplatform.dto;
 
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
@@ -10,9 +9,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OfferDto extends AbstractBaseDto{
-    private Integer id;
-
+public class OfferDto extends AbstractBaseDto {
     private @NonNull BigDecimal price;
 
     @Size(max = 200)

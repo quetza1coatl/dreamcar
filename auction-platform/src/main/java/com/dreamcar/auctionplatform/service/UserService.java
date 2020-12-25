@@ -10,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Slf4j
 @Transactional(readOnly = true)
@@ -24,21 +22,13 @@ public class UserService {
         this.roleRepository = roleRepository;
     }
 
-    public Iterable<User> getAll(){
+    public Iterable<User> getAll() {
         return userRepository.findAll();
     }
 
 
-    public User save(UserDto userDto){
+    public User save(UserDto userDto) {
         Role role = roleRepository.findByName(userDto.getRole());
-        if (role == null) {
-            String exceptionMessage = String.format(
-                    EntityNotFoundException.EXCEPTION_MESSAGE_FORMAT, Role.class.getSimpleName(), userDto.getRole()
-            );
-            log.error(exceptionMessage);
-            throw new EntityNotFoundException(exceptionMessage);
-        }
-
         User user = new User(userDto.getEmail(), role);
         return userRepository.save(user);
     }
