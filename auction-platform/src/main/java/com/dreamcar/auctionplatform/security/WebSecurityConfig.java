@@ -1,4 +1,4 @@
-package com.dreamcar.inventorysystem.security;
+package com.dreamcar.auctionplatform.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,9 +13,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/components/feign/**").anonymous()
+                .antMatchers("/h2/**").anonymous()
+                .antMatchers("/requests/feign/**").anonymous()
                 .antMatchers("/css/**").permitAll()
-                .anyRequest().fullyAuthenticated().and().formLogin();
+                .anyRequest().fullyAuthenticated()
+                .and().formLogin();
     }
 
     @Configuration
