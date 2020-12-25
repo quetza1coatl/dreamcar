@@ -50,13 +50,13 @@ class RequestTable extends React.Component {
         },
         {
             name: 'Offers',
-            cell: row => <Link to={`/offersByRequestId/${row.id}`}>Details</Link>
+            cell: row => <Link to={`/offers/${row.id}`}>Details</Link>
         },
         {
             name: 'Actions',
             cell: row =>
                 <span>
-                {row.editable ?  <a href="javascript:void(0)" onClick={() => this.onEditRequestClick(row.id)}>
+                {row.editable ? <a href="javascript:void(0)" onClick={() => this.onEditRequestClick(row.id)}>
                     Edit <i className="glyphicon glyphicon-pencil"/>
                 </a> : null}
                     {row.offerCreated ? <a href="javascript:void(0)" onClick={() => this.onCreateOfferClick(row.id)}>
@@ -79,6 +79,10 @@ class RequestTable extends React.Component {
     }
 
     componentDidMount() {
+        this.fetchRequestData()
+    }
+
+    fetchRequestData = () => {
         fetch("/requests")
             .then(res => res.json())
             .then(
@@ -108,22 +112,26 @@ class RequestTable extends React.Component {
     };
 
     onCreateOffer = (price, description) => {
-        /*fetch("/api/createOffer", {
+        fetch(`/offers/createOffer`, {
             method: "POST",
-            body: {
+            body: JSON.stringify({
                 requestId: this.state.createOfferRequestId,
                 price,
-                description
+                description,
+                status: 'not processed'
+            }),
+            headers: {
+                'Content-Type': 'application/json'
             }
         })
-            .then(res => res.json())
             .then(
                 () => {
+                    this.onCreateOfferClose()
                 },
                 (error) => {
                     console.log(error)
                 }
-            )*/
+            )
     };
 
     onSaveExpirationDate = (expirationDate) => {
@@ -145,6 +153,7 @@ class RequestTable extends React.Component {
             isShowRequestEditor: false,
             editableRequestId: null
         })
+        this.fetchRequestData()
     };
 
     onCreateOfferClose = () => {
@@ -152,6 +161,7 @@ class RequestTable extends React.Component {
             createOfferRequestId: null,
             isShowOfferCreator: false
         })
+        this.fetchRequestData()
     };
 
     render() {

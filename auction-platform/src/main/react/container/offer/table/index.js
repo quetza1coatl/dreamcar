@@ -4,30 +4,6 @@ import Table from '../../../component/table'
 import Button from "react-bootstrap/Button";
 import OfferEditor from '../editor'
 
-
-const mockData = [
-    {
-        id: 'test1',
-        price: 'dfsfdsdfs',
-        requestId: 123,
-        supplierEmail: 'test@test.com',
-        description: 'Wow!',
-        status: 'non-processed',
-        isEditable: true,
-        isApplying: false
-    },
-    {
-        id: 'test2',
-        price: 'aaaaaa',
-        requestId: 124,
-        supplierEmail: 'test2@test.com',
-        description: 'Wow!',
-        status: 'non-processed',
-        isEditable: false,
-        isApplying: true
-    }
-]
-
 class OfferTable extends React.Component {
     OFFER_TABLE_TITLE = 'Offers'
     OFFER_TABLE_COLUMNS = [
@@ -68,7 +44,8 @@ class OfferTable extends React.Component {
                 {row.editable ? <a href="javascript:void(0)" onClick={() => this.onEditOfferClick(row.id)}>
                     Edit <i className="glyphicon glyphicon-pencil"/>
                 </a> : null}
-                    {row.applying ? <Button variant="primary" onClick={this.applyOffer(row.id)}>Apply</Button> : null}
+                    {row.applying ?
+                        <Button variant="primary" onClick={() => this.applyOffer(row.id)}>Apply</Button> : null}
             </span>
         }
     ]
@@ -83,8 +60,12 @@ class OfferTable extends React.Component {
     }
 
     componentDidMount() {
+        this.fetchOfferData()
+    }
+
+    fetchOfferData = () => {
         const {requestId} = this.props.match.params
-        const getOffersURL = requestId ? `/offersByRequestId/${requestId}` : `/offers`
+        const getOffersURL = requestId ? `/offers/${requestId}` : `/offers`
         fetch(getOffersURL)
             .then(res => res.json())
             .then(
@@ -100,15 +81,15 @@ class OfferTable extends React.Component {
     }
 
     applyOffer = (offerId) => {
-        /*fetch(`/api/applyOffer/${offerId}`)
-            .then(res => res.json())
+        fetch(`/offers/applyOffer/${offerId}`)
             .then(
-                (result) => {
+                () => {
+                    this.fetchOfferData()
                 },
                 (error) => {
                     console.log(error)
                 }
-            )*/
+            )
     };
 
     onEditOfferClick = (offerId) => {
@@ -119,21 +100,17 @@ class OfferTable extends React.Component {
     };
 
     onSavePrice = (price) => {
-        /*fetch("/api/updateExpirationDate", {
+        fetch(`/offers/updateOffer/${this.state.editableOfferId}`, {
             method: "POST",
-            body: {
-                offerId: this.state.editableOfferId,
-                price: price
-            }
+            body: price
         })
-            .then(res => res.json())
             .then(
                 () => {
                 },
                 (error) => {
                     console.log(error)
                 }
-            )*/
+            )
     };
 
     onEditOfferClose = () => {
@@ -141,6 +118,7 @@ class OfferTable extends React.Component {
             isShowOfferEditor: false,
             editableOfferId: null
         })
+        this.fetchOfferData()
     };
 
     render() {

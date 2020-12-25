@@ -11,8 +11,6 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class RequestDto extends AbstractBaseDto {
-    private Integer id;
-
     @Size(max = 45)
     private @NonNull String partName;
 

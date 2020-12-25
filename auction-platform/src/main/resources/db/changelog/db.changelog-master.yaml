@@ -287,7 +287,7 @@ databaseChangeLog:
               name: role_id
               value: 2
   - changeSet:
-      id: fill_request_table
+      id: fill_request_table_1
       author: Aliaksei Sviatokha
       changes:
       - insert:
@@ -312,7 +312,63 @@ databaseChangeLog:
               name: request_status_id
               value: 1
   - changeSet:
-      id: fill_offer_table
+      id: fill_request_table_2
+      author: Anastasia Andruhovich
+      changes:
+        - insert:
+            tableName: request
+            columns:
+              - column:
+                  name: part_name
+                  value: "suspension"
+              - column:
+                  name: quantity
+                  value: 10
+              - column:
+                  name: creation_date
+                  value: now()
+              - column:
+                  name: expiration_date
+                  value: now()
+              - column:
+                  name: description
+                  value: "Suspension is the system of tires, tire air, springs, shock absorbers and linkages that connects a vehicle to its wheels and allows relative motion between the two."
+              - column:
+                  name: customer_id
+                  value: 1
+              - column:
+                  name: request_status_id
+                  value: 2
+  - changeSet:
+      id: fill_request_table_3
+      author: Anastasia Andruhovich
+      changes:
+        - insert:
+            tableName: request
+            columns:
+              - column:
+                  name: part_name
+                  value: "suspension"
+              - column:
+                  name: quantity
+                  value: 15
+              - column:
+                  name: creation_date
+                  value: now()
+              - column:
+                  name: expiration_date
+                  value: now()
+              - column:
+                  name: description
+                  value: "Suspension is the system of tires, tire air, springs, shock absorbers and linkages that connects a vehicle to its wheels and allows relative motion between the two."
+              - column:
+                  name: customer_id
+                  value: 1
+              - column:
+                  name: request_status_id
+                  value: 3
+  - changeSet:
+      id: fill_offer_table_1
       author: Aliaksei Sviatokha
       changes:
       - insert:
@@ -333,3 +389,47 @@ databaseChangeLog:
           - column:
               name: offer_status_id
               value: 1
+  - changeSet:
+      id: fill_offer_table_2
+      author: Anastasia Andruhovich
+      changes:
+        - insert:
+            tableName: offer
+            columns:
+              - column:
+                  name: price
+                  value: 14
+              - column:
+                  name: description
+                  value: "Best suspension u have ever seen"
+              - column:
+                  name: supplier_id
+                  value: 2
+              - column:
+                  name: request_id
+                  value: 3
+              - column:
+                  name: offer_status_id
+                  value: 1
+  - changeSet:
+      id: fill_offer_table_3
+      author: Anastasia Andruhovich
+      changes:
+        - insert:
+            tableName: offer
+            columns:
+              - column:
+                  name: price
+                  value: 15
+              - column:
+                  name: description
+                  value: "Best suspension u have ever seen"
+              - column:
+                  name: supplier_id
+                  value: 2
+              - column:
+                  name: request_id
+                  value: 3
+              - column:
+                  name: offer_status_id
+                  value: 1

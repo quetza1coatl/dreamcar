@@ -9,4 +9,6 @@ public interface ComponentRepository extends CrudRepository<Component, Integer> 
 
     @Override
     List<Component> findAll();
+
+    Component findComponentByName(String name);
 }
