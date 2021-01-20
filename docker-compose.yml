@@ -1,0 +1,14 @@
+version: '3'
+services:
+  eureka-server:
+    build: ./eureka-server
+    restart: unless-stopped
+    ports:
+    - 8000:8000
+  inventory-system:
+    build: ./inventory-system
+    restart: unless-stopped
+    ports:
+    - "8081:8081"
+    depends_on:
+    - eureka-server
