@@ -9,6 +9,13 @@ services:
     build: ./inventory-system
     restart: unless-stopped
     ports:
-    - "8081:8081"
+    - 8081:8081
+    depends_on:
+    - eureka-server
+  auction-platform:
+    build: ./auction-platform
+    restart: unless-stopped
+    ports:
+    - 8082:8082
     depends_on:
     - eureka-server
